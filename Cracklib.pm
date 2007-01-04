@@ -1,39 +1,45 @@
 package Crypt::Cracklib;
 
-# $Id: Cracklib.pm,v 1.1 1998/11/24 03:13:38 daniel Exp daniel $
+# $Id: Cracklib.pm 2 2007-01-04 00:04:12Z dsully $
 
 use strict;
-use vars qw($VERSION @ISA @EXPORT $AUTOLOAD $DICT);
+use vars qw($VERSION @ISA @EXPORT $AUTOLOAD);
 
 require Exporter;
 require DynaLoader;
 
-$VERSION = '0.01';
+$VERSION = '1.0';
 @ISA = qw(Exporter DynaLoader);
 @EXPORT = qw(
-	MAXBLOCKLEN
-	MAXWORDLEN
-	NUMWORDS
-	PFOR_FLUSH
-	PFOR_USEHWMS
-	PFOR_WRITE
-	PIH_MAGIC
-	STRINGSIZE
-	TRUNCSTRINGSIZE
 	fascist_check
 	check
+	GTry
 );
 
 # Wrapper.
 sub fascist_check {
-	my ($password,$dict) = @_;
-	$dict = $DICT if !defined $dict or $dict =~ /^\s*$/;
+	my ($password, $dict) = @_;
 
-	return "it is all whitespace" if $password =~ /^\s*$/;
-	return "No dictionary specified" if !defined $dict or $dict =~ /^\s*$/;
-	
-	my $val = FascistCheck($password,$dict);
-	$val = 'ok' if !defined $val or $val =~ /^\s*$/;
+	if ($password =~ /^\s*$/) {
+		return "Nothing to do: \$password is all whitespace!";
+	}
+
+	my $val = '';
+
+	if (defined $dict && -f "$dict.pwd") {
+
+		$val = FascistCheck($password, $dict);
+
+	} else {
+
+		$val = FascistCheck($password);
+	}
+
+	if (!defined $val or $val =~ /^\s*$/) {
+
+		$val = 'ok';
+	}
+
 	return $val;
 }
 
@@ -45,27 +51,10 @@ sub check {
 	return 0;
 }
 
-sub AUTOLOAD {
-	my $constname;
-	($constname = $AUTOLOAD) =~ s/.*:://;
-	my $val = constant($constname, @_ ? $_[0] : 0);
-
-	if ($! != 0) {
-		if ($! =~ /Invalid/) {
-			$AutoLoader::AUTOLOAD = $AUTOLOAD;
-			goto &AutoLoader::AUTOLOAD;
-		} else {
-			warn "Your vendor has not defined Crypt::Cracklib macro $constname";
-		}
-	}
-
-	eval "sub $AUTOLOAD { $val }";
-	goto &$AUTOLOAD;
-}
-
 bootstrap Crypt::Cracklib $VERSION;
 
 1;
+
 __END__
 
 =head1 NAME
@@ -81,28 +70,31 @@ Crypt::Cracklib - Perl interface to Alec Muffett's Cracklib.
   print "Ok"  if  check($password, $dictionary);
   print "Bad" if !check($password, $dictionary);
 
-  $Crypt::Cracklib::DICT = '/path/to/cracklib/dictionary';
-  my $reason = fascist_check($password);
-
 =head1 DESCRIPTION
 
-This is a simple interface to Alec Muffett's Crack library.
+This is a simple interface to the cracklib library.
 
-=head1 Exported constants
+=head1 FUNCTIONS
 
-  MAXBLOCKLEN
-  MAXWORDLEN
-  NUMWORDS
-  PFOR_FLUSH
-  PFOR_USEHWMS
-  PFOR_WRITE
-  PIH_MAGIC
-  STRINGSIZE
-  TRUNCSTRINGSIZE
+=over 4
+
+=item * fascist_check( $password, [ $dictionary ] )
+
+Returns a string value. Either an error, or "ok".
+
+=item * check( $password, [ $dictionary ] )
+
+Returns a true or false value if the password is acceptable or not.
+
+=item * GTry( $rawstring, $password )
+
+Returns true if the password is derived from $rawstring. False otherwise.
+
+=back
 
 =head1 AUTHOR
 
-Daniel <daniel-cpan-cracklib@electricrain.com>
+Dan Sully <daniel@cpan.org>
 
 =head1 SEE ALSO
 

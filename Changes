@@ -1,5 +1,15 @@
 Revision history for Perl extension Crypt::Cracklib.
 
+0.03  Wed Jan  3 14:15:05 PST 2007
+	- Add GTry() interface.
+	- Use Module::Install to write out Makefile
+	- Simplify .xs & .pm files.
+	- Use a default dictionary if available.
+	- Use Test::More
+	  
+0.02  Fri Nov 21 17:07:12 1998
+	- Whoops, forgot the README file.
+
 0.01  Mon Nov 23 10:44:54 1998
 	- original version; created by h2xs 1.18
 
