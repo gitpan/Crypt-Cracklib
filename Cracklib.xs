@@ -15,10 +15,16 @@ extern "C" {
 MODULE = Crypt::Cracklib PACKAGE = Crypt::Cracklib		
 
 const char*
-FascistCheck(password, path = CRACKLIB_DICTPATH)
+_FascistCheck(password, path)
 	const char *password
 	const char *path
 	PROTOTYPE: $$
+	CODE:
+
+	RETVAL = FascistCheck(password, path);
+
+	OUTPUT:
+	RETVAL
 
 int
 GTry(rawtext, password)

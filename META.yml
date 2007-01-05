@@ -1,0 +1,13 @@
+abstract: Perl interface to Alec Muffett's Cracklib.
+author: 'Dan Sully <daniel@cpan.org>'
+distribution_type: module
+generated_by: Module::Install version 0.64
+license: perl
+name: Crypt-Cracklib
+no_index:
+  directory:
+    - inc
+    - t
+requires:
+  perl: 5.004
+version: 1.1

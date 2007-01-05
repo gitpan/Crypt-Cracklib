@@ -4,12 +4,11 @@ Cracklib.xs
 MANIFEST
 Makefile.PL
 README
+META.yml
 t/01use.t
 t/pod.t
-inc
-inc/Module
+t/pod-coverage.t
 inc/Module/Install.pm
-inc/Module/Install
 inc/Module/Install/Metadata.pm
 inc/Module/Install/Base.pm
 inc/Module/Install/Compiler.pm

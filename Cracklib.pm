@@ -1,20 +1,37 @@
 package Crypt::Cracklib;
 
-# $Id: Cracklib.pm 2 2007-01-04 00:04:12Z dsully $
+# $Id: Cracklib.pm 5 2007-01-05 23:23:59Z dsully $
 
 use strict;
-use vars qw($VERSION @ISA @EXPORT $AUTOLOAD);
+use vars qw($VERSION @ISA @EXPORT $AUTOLOAD $DEFAULT_DICT);
 
 require Exporter;
 require DynaLoader;
 
-$VERSION = '1.0';
+$VERSION = '1.1';
 @ISA = qw(Exporter DynaLoader);
 @EXPORT = qw(
 	fascist_check
 	check
 	GTry
 );
+
+$DEFAULT_DICT = "";
+
+{
+	for my $path (qw(
+		/usr/share/pw_dict
+		/var/cache/cracklib/cracklib_dict
+		/usr/lib/cracklib_dict
+		/usr/share/dict/cracklib_words)) {
+
+		if (-f "$path.pwd") {
+
+			$DEFAULT_DICT = $path;
+			last;
+		}
+	}
+}
 
 # Wrapper.
 sub fascist_check {
@@ -24,30 +41,21 @@ sub fascist_check {
 		return "Nothing to do: \$password is all whitespace!";
 	}
 
-	my $val = '';
+	my $ret = _FascistCheck($password, ($dict || $DEFAULT_DICT));
 
-	if (defined $dict && -f "$dict.pwd") {
+	if (!defined $ret or $ret =~ /^\s*$/) {
 
-		$val = FascistCheck($password, $dict);
-
-	} else {
-
-		$val = FascistCheck($password);
+		$ret = 'ok';
 	}
 
-	if (!defined $val or $val =~ /^\s*$/) {
-
-		$val = 'ok';
-	}
-
-	return $val;
+	return $ret;
 }
 
 # Wrapper wrapper.
 sub check {
-	my $val = fascist_check(@_);
+	my $ret = fascist_check(@_);
 
-	return 1 if $val eq 'ok';
+	return 1 if $ret eq 'ok';
 	return 0;
 }
 
