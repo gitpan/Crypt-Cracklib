@@ -16,18 +16,12 @@ MODULE = Crypt::Cracklib PACKAGE = Crypt::Cracklib
 
 const char*
 _FascistCheck(password, path)
-	const char *password
-	const char *path
+	char *password
+	char *path
 	PROTOTYPE: $$
 	CODE:
 
-	RETVAL = FascistCheck(password, path);
+	RETVAL = FascistCheck((const char*)password, (const char*)path);
 
 	OUTPUT:
 	RETVAL
-
-int
-GTry(rawtext, password)
-	char *rawtext
-	char *password
-	PROTOTYPE: $$

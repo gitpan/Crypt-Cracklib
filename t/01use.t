@@ -2,7 +2,12 @@ use Test::More tests => 19;
 
 BEGIN { use_ok( 'Crypt::Cracklib' ); }
 
-like(fascist_check(getpwuid($<).'1'), qr/username/, "username");
+SKIP: {
+    $username = getpwuid($<);
+    skip "won't work unless username is longer", 1
+    unless length($username) > 4;
+    like(fascist_check($username.'1'), qr/username/, "username");
+};
 
 # it's WAY too short
 like(fascist_check('bad'), qr/WAY/, "way too short");

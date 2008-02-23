@@ -1,6 +1,6 @@
 package Crypt::Cracklib;
 
-# $Id: Cracklib.pm 5 2007-01-05 23:23:59Z dsully $
+# $Id: Cracklib.pm 6 2008-02-23 22:05:48Z dsully $
 
 use strict;
 use vars qw($VERSION @ISA @EXPORT $AUTOLOAD $DEFAULT_DICT);
@@ -8,13 +8,9 @@ use vars qw($VERSION @ISA @EXPORT $AUTOLOAD $DEFAULT_DICT);
 require Exporter;
 require DynaLoader;
 
-$VERSION = '1.1';
+$VERSION = '1.2';
 @ISA = qw(Exporter DynaLoader);
-@EXPORT = qw(
-	fascist_check
-	check
-	GTry
-);
+@EXPORT = qw(fascist_check check);
 
 $DEFAULT_DICT = "";
 
@@ -93,10 +89,6 @@ Returns a string value. Either an error, or "ok".
 =item * check( $password, [ $dictionary ] )
 
 Returns a true or false value if the password is acceptable or not.
-
-=item * GTry( $rawstring, $password )
-
-Returns true if the password is derived from $rawstring. False otherwise.
 
 =back
 
