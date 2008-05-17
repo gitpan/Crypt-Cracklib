@@ -1,6 +1,6 @@
 package Crypt::Cracklib;
 
-# $Id: Cracklib.pm 6 2008-02-23 22:05:48Z dsully $
+# $Id: Cracklib.pm 7 2008-05-17 07:46:09Z dsully $
 
 use strict;
 use vars qw($VERSION @ISA @EXPORT $AUTOLOAD $DEFAULT_DICT);
@@ -8,7 +8,7 @@ use vars qw($VERSION @ISA @EXPORT $AUTOLOAD $DEFAULT_DICT);
 require Exporter;
 require DynaLoader;
 
-$VERSION = '1.2';
+$VERSION = '1.3';
 @ISA = qw(Exporter DynaLoader);
 @EXPORT = qw(fascist_check check);
 
