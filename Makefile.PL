@@ -36,6 +36,10 @@ license('perl');
 perl_version('5.004');
 all_from('Cracklib.pm');
 
+test_requires 'Test::Pod::Coverage' => '1.08';
+test_requires 'Pod::Coverage' => '0.19';
+test_requires 'Test::More' => '0.47';
+
 cc_lib_links('crack');
 
 auto_install();
