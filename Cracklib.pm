@@ -1,6 +1,6 @@
 package Crypt::Cracklib;
 
-# $Id: Cracklib.pm 8 2008-05-18 15:23:30Z dsully $
+# $Id: Cracklib.pm 9 2008-11-08 23:18:56Z dsully $
 
 use strict;
 use vars qw($VERSION @ISA @EXPORT $AUTOLOAD $DEFAULT_DICT);
@@ -8,7 +8,7 @@ use vars qw($VERSION @ISA @EXPORT $AUTOLOAD $DEFAULT_DICT);
 require Exporter;
 require DynaLoader;
 
-$VERSION = '1.4';
+$VERSION = '1.5';
 @ISA = qw(Exporter DynaLoader);
 @EXPORT = qw(fascist_check check);
 
@@ -19,6 +19,7 @@ $DEFAULT_DICT = "";
 		/usr/share/pw_dict
 		/var/cache/cracklib/cracklib_dict
 		/usr/lib/cracklib_dict
+		/usr/lib64/cracklib_dict
 		/usr/share/dict/cracklib_words)) {
 
 		if (-f "$path.pwd") {

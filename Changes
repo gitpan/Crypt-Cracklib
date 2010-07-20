@@ -1,5 +1,8 @@
 Revision history for Perl extension Crypt::Cracklib.
 
+1.5   Tue Jul 20 14:00:16 PDT 2010
+	- Add lib64 dict path.
+
 1.4   Sun May 18 08:23:16 PDT 2008
 	- Add test requires
 
@@ -22,7 +25,7 @@ Revision history for Perl extension Crypt::Cracklib.
 	- Simplify .xs & .pm files.
 	- Use a default dictionary if available.
 	- Use Test::More
-	  
+
 0.02  Fri Nov 21 17:07:12 1998
 	- Whoops, forgot the README file.
 
