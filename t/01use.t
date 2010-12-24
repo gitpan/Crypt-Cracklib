@@ -1,4 +1,4 @@
-use Test::More tests => 19;
+use Test::More tests => 22;
 
 BEGIN { use_ok( 'Crypt::Cracklib' ); }
 
@@ -28,7 +28,7 @@ like(fascist_check('abcdef'), qr/simplistic/, "simplistic");
 like(fascist_check('dictionary'), qr/dictionary/, "dictionary");
 
 # it is based on a (reversed) dictionary word
-like(fascist_check('yranoitcid'), qr/reversed/, "reversed dictionary");
+like(fascist_check('yranoitcid'), qr/dictionary/, "reversed dictionary");
 
 # Ok
 ok(fascist_check('Sil1ntBob') eq 'ok');
@@ -43,3 +43,7 @@ ok(check('N3veRGs$'));
 ok(!check('blather'));
 ok(!check('begin'));
 ok(check('Neg@torY'));
+
+ok(bad_pass('bad'));
+ok(bad_pass('') eq 'Password is all whitespace');
+ok(bad_pass('Neg@torY') eq '');
